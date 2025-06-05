@@ -66,13 +66,6 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
 export SOURCE_DATE_EPOCH=1749138018
-export  CGO_ENABLED=1
-unset CLEAR_DEBUG_TERSE
-export GOAMD64=v3
-CXXFLAGS="$CXXFLAGS -O3 -march=x86-64-v3"
-CGO_CPPFLAGS="$CXXFLAGS"
-export CXX="/usr/bin/g++ -O3 -march=x86-64-v3"
-go build -v  -tags "avx,avx2"
 
 mkdir -p clr-build
 pushd clr-build
@@ -94,6 +87,15 @@ export GOAMD64=v2
 %cmake ..   -G 'Unix Makefiles'
 make  %{?_smp_mflags}
 popd
+
+export  CGO_ENABLED=1
+unset CLEAR_DEBUG_TERSE
+export GOAMD64=v3
+CXXFLAGS="$CXXFLAGS -O3 -march=x86-64-v3"
+CGO_CPPFLAGS="$CXXFLAGS"
+export CXX="/usr/bin/g++ -O3 -march=x86-64-v3"
+go build -v  -tags "avx,avx2"
+
 
 
 %install
@@ -122,11 +124,11 @@ GOAMD64=v2
 pushd clr-build
 %make_install
 popd
+mv %{buildroot}/usr/lib %{buildroot}/usr/lib64
 mkdir -p %{buildroot}/usr/bin
 cp ollama  %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/ollama.service
-
 
 %files
 %defattr(-,root,root,-)
@@ -138,14 +140,14 @@ install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/ollama.service
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib/ollama/libggml-base.so
-/usr/lib/ollama/libggml-cpu-alderlake.so
-/usr/lib/ollama/libggml-cpu-haswell.so
-/usr/lib/ollama/libggml-cpu-icelake.so
-/usr/lib/ollama/libggml-cpu-sandybridge.so
-/usr/lib/ollama/libggml-cpu-skylakex.so
-/usr/lib/ollama/libggml-cpu-sse42.so
-/usr/lib/ollama/libggml-cpu-x64.so
+/usr/lib64/ollama/libggml-base.so
+/usr/lib64/ollama/libggml-cpu-alderlake.so
+/usr/lib64/ollama/libggml-cpu-haswell.so
+/usr/lib64/ollama/libggml-cpu-icelake.so
+/usr/lib64/ollama/libggml-cpu-sandybridge.so
+/usr/lib64/ollama/libggml-cpu-skylakex.so
+/usr/lib64/ollama/libggml-cpu-sse42.so
+/usr/lib64/ollama/libggml-cpu-x64.so
 
 %files license
 %defattr(0644,root,root,0755)
