@@ -64,7 +64,11 @@ export LANG=C.UTF-8
 export SOURCE_DATE_EPOCH=1749138018
 export  CGO_ENABLED=1
 unset CLEAR_DEBUG_TERSE
-go build -v
+export GOAMD64=v4
+CXXFLAGS="$CXXFLAGS -O3 -march=x86-64-v4"
+CGO_CPPFLAGS="$CXXFLAGS"
+export CXX="/usr/bin/g++ -O3 -march=x86-64-v4"
+go build -v  -tags "avx,avx2"
 
 mkdir -p clr-build
 pushd clr-build
