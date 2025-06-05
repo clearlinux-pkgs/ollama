@@ -7,6 +7,9 @@ Release  : 3
 URL      : https://github.com/ollama/ollama/archive/refs/tags/v0.9.0.tar.gz
 Source0  : https://github.com/ollama/ollama/archive/refs/tags/v0.9.0.tar.gz
 Source1  : http://localhost/cgit/projects/ollama-vendor/snapshot/ollama-vendor-0.1.tar.gz
+Source2  : ollama.service
+
+Patch1: blas.patch
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
@@ -55,6 +58,7 @@ license components for the ollama package.
 cd %{_builddir}/ollama-0.9.0
 tar xf %{_sourcedir}/ollama-vendor-0.1.tar.gz
 mv ollama-vendor-0.1/vendor .
+#%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
@@ -64,10 +68,10 @@ export LANG=C.UTF-8
 export SOURCE_DATE_EPOCH=1749138018
 export  CGO_ENABLED=1
 unset CLEAR_DEBUG_TERSE
-export GOAMD64=v4
-CXXFLAGS="$CXXFLAGS -O3 -march=x86-64-v4"
+export GOAMD64=v3
+CXXFLAGS="$CXXFLAGS -O3 -march=x86-64-v3"
 CGO_CPPFLAGS="$CXXFLAGS"
-export CXX="/usr/bin/g++ -O3 -march=x86-64-v4"
+export CXX="/usr/bin/g++ -O3 -march=x86-64-v3"
 go build -v  -tags "avx,avx2"
 
 mkdir -p clr-build
@@ -120,9 +124,14 @@ pushd clr-build
 popd
 mkdir -p %{buildroot}/usr/bin
 cp ollama  %{buildroot}/usr/bin
+mkdir -p %{buildroot}/usr/lib/systemd/system
+install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/ollama.service
+
 
 %files
 %defattr(-,root,root,-)
+/usr/lib/systemd/system/ollama.service
+
 
 %files bin
 /usr/bin/ollama
