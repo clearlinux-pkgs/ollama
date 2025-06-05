@@ -7,7 +7,7 @@
 #
 Name     : ollama
 Version  : 0.9.0
-Release  : 1
+Release  : 2
 URL      : https://github.com/ollama/ollama/archive/refs/tags/v0.9.0.tar.gz
 Source0  : https://github.com/ollama/ollama/archive/refs/tags/v0.9.0.tar.gz
 Summary  : No detailed summary available
@@ -58,7 +58,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1749137577
+export SOURCE_DATE_EPOCH=1749138018
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -95,7 +95,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1749137577
+export SOURCE_DATE_EPOCH=1749138018
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ollama
 cp %{_builddir}/ollama-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/ollama/d4f3ba2fbf9cad2020105ee33123c1be60d29f59 || :
