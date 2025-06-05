@@ -3,7 +3,7 @@
 #
 Name     : ollama
 Version  : 0.9.0
-Release  : 3
+Release  : 4
 URL      : https://github.com/ollama/ollama/archive/refs/tags/v0.9.0.tar.gz
 Source0  : https://github.com/ollama/ollama/archive/refs/tags/v0.9.0.tar.gz
 Source1  : http://localhost/cgit/projects/ollama-vendor/snapshot/ollama-vendor-0.1.tar.gz
