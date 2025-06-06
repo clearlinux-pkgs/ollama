@@ -121,7 +121,6 @@ export GOAMD64=v2
 GOAMD64=v2
 pushd clr-build
 popd
-mv %{buildroot}/usr/lib %{buildroot}/usr/lib64
 mkdir -p %{buildroot}/usr/bin
 cp ollama  %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
