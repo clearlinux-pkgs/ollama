@@ -9,7 +9,8 @@ Source0  : https://github.com/ollama/ollama/archive/refs/tags/v0.9.0.tar.gz
 Source1  : http://localhost/cgit/projects/ollama-vendor/snapshot/ollama-vendor-0.1.tar.gz
 Source2  : ollama.service
 
-Patch1: blas.patch
+Patch1: avx2.patch
+Patch2: blas.patch
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : MIT
@@ -58,7 +59,8 @@ license components for the ollama package.
 cd %{_builddir}/ollama-0.9.0
 tar xf %{_sourcedir}/ollama-vendor-0.1.tar.gz
 mv ollama-vendor-0.1/vendor .
-#%patch1 -p1
+#patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
@@ -84,8 +86,8 @@ FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 export GOAMD64=v2
-%cmake ..   -G 'Unix Makefiles'
-make  %{?_smp_mflags}
+#%cmake ..   -G 'Unix Makefiles'
+#make  %{?_smp_mflags}
 popd
 
 export  CGO_ENABLED=1
@@ -122,7 +124,6 @@ cp %{_builddir}/ollama-%{version}/ml/backend/ggml/ggml/LICENSE %{buildroot}/usr/
 export GOAMD64=v2
 GOAMD64=v2
 pushd clr-build
-%make_install
 popd
 mv %{buildroot}/usr/lib %{buildroot}/usr/lib64
 mkdir -p %{buildroot}/usr/bin
@@ -140,14 +141,6 @@ install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/ollama.service
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/ollama/libggml-base.so
-/usr/lib64/ollama/libggml-cpu-alderlake.so
-/usr/lib64/ollama/libggml-cpu-haswell.so
-/usr/lib64/ollama/libggml-cpu-icelake.so
-/usr/lib64/ollama/libggml-cpu-sandybridge.so
-/usr/lib64/ollama/libggml-cpu-skylakex.so
-/usr/lib64/ollama/libggml-cpu-sse42.so
-/usr/lib64/ollama/libggml-cpu-x64.so
 
 %files license
 %defattr(0644,root,root,0755)

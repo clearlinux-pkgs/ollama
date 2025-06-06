@@ -1,2 +1,8 @@
-# This file contains the output files that need %exclude. Full path
-# names, one per line.
+/usr/lib64/ollama/libggml-base.so
+/usr/lib64/ollama/libggml-cpu-alderlake.so
+/usr/lib64/ollama/libggml-cpu-haswell.so
+/usr/lib64/ollama/libggml-cpu-icelake.so
+/usr/lib64/ollama/libggml-cpu-sandybridge.so
+/usr/lib64/ollama/libggml-cpu-skylakex.so
+/usr/lib64/ollama/libggml-cpu-sse42.so
+/usr/lib64/ollama/libggml-cpu-x64.so
