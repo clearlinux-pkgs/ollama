@@ -8,6 +8,7 @@ URL      : https://github.com/ollama/ollama/archive/refs/tags/v0.9.0.tar.gz
 Source0  : https://github.com/ollama/ollama/archive/refs/tags/v0.9.0.tar.gz
 Source1  : http://localhost/cgit/projects/ollama-vendor/snapshot/ollama-vendor-0.1.tar.gz
 Source2  : ollama.service
+Source3  : ollama.tmpfiles
 
 Summary  : No detailed summary available
 Group    : Development/Tools
@@ -125,10 +126,13 @@ mkdir -p %{buildroot}/usr/bin
 cp ollama  %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/ollama.service
+mkdir -p %{buildroot}/usr/lib/tmpfiles.d
+install -m 0644 %{SOURCE3} %{buildroot}/usr/lib/tmpfiles.d/ollama.conf
 
 %files
 %defattr(-,root,root,-)
 /usr/lib/systemd/system/ollama.service
+/usr/lib/tmpfiles.d/ollama.conf
 
 
 %files bin
